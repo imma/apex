@@ -4,14 +4,17 @@ function bootstrap {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  local url_apex_Darwin="https://github.com/apex/apex/releases/download/v${APEX_VERSION}/apex_darwin_amd64"
-  local url_apex_Linux="https://github.com/apex/apex/releases/download/v${APEX_VERSION}/apex_linux_amd64"
+  local url_apex_Darwin="https://github.com/apex/apex/releases/download/v${APEX_VERSION}/apex_${APEX_VERSION}_darwin_amd64.tar.gz"
+  local url_apex_Linux="https://github.com/apex/apex/releases/download/v${APEX_VERSION}/apex_${APEX_VERSION}_linux_amd64.tar.gz"
 
   local url_apex="url_apex_$(uname -s)"
   local fnm_apex="$(basename "${!url_apex}")-${APEX_VERSION}"
   cache curl "$fnm_apex" "${!url_apex}"
 
-  install -m 0755 "${BASEBOX_CACHE}/curl/$fnm_apex" "$shome/bin/apex"
-}
+  mkdir -p "$shome/bin"
+  cd "$shome/bin"
+  tar xvfz "${BASEBOX_CACHE}/curl/$fnm_apex" apex
+  chmod 755 apex
+} 
 
 bootstrap

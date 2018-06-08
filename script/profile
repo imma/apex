@@ -3,8 +3,6 @@
 function _apex_profile {
   local shome="${_apex_home:-"$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
   PATH="$shome/bin:$PATH"
-
-  APEX_VERSION="0.14.0"
 }
 
 _apex_profile
